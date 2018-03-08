@@ -8,7 +8,10 @@ function createIssue() {
 }
 
 function showForkedRepo(json) {
+  console.log("*** json.full_name: ", json.full_name)
   console.log("*** json: ", json)
+  const repo = `<p><li><a href="https://github.com/${json.full_name}" target="_blank">Get Repo</a></p>`
+  document.getElementById("results").innerHTML = repo
 }
 
 function forkRepo() {
@@ -37,5 +40,5 @@ function forkRepo() {
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
-  return 'c6e33709c86589d96c7ebc966ef8acec3d2afe1e'
+  return '75520947b97932e7625de06a49f2b2c8b9fa19c5'
 }
