@@ -7,9 +7,9 @@ function showIssues(json) {
 function createIssue() {
 }
 
-function showResults(json) {
+function showForkedRepo(json) {
+  console.log("*** json: ", json)
 }
-
 
 function forkRepo() {
   const token = getToken()
@@ -20,12 +20,22 @@ function forkRepo() {
     headers: {
     Authorization: `token ${token}`
     }
-  }).then(res => console.log(res))
+    
+  })// return the forked repository
+    .then(function(result) {
+      return result.json()
+    })
+    .then(function(result) {
+      showForkedRepo(result)
+    }) 
+    .catch(function(error) {
+        console.log(error)
+    })
 
 }
 
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
-  return ''
+  return 'c6e33709c86589d96c7ebc966ef8acec3d2afe1e'
 }
