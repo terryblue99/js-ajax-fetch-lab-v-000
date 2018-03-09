@@ -1,5 +1,19 @@
 function getIssues() {
   console.log("*** getIssues")
+  const token = getToken()
+  const owner = document.getElementById('owner').value
+  const repo = document.getElementById('repo').value
+  fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
+    headers: {
+    Authorization: `token ${token}`
+    }
+
+  }).then(function() {
+      showIssues(result)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 function showIssues(json) {
@@ -22,7 +36,10 @@ function createIssue() {
       title: title,
       body: body
     })     
-  }).catch((error) => {
+  }).then(function() {
+      getIssues(result)
+    })
+    .catch((error) => {
       console.log(error)
     })
 }
