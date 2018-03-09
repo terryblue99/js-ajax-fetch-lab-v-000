@@ -11,8 +11,6 @@ function createIssue() {
   const token = getToken()  
   const title = document.getElementById("title").value
   const body = document.getElementById("body").value
-  console.log("*** createIssue title: ", title)
-  console.log("*** createIssue body: ", body)
   const owner = document.getElementById('owner').value
   const repo = document.getElementById('repo').value
   fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
@@ -20,8 +18,10 @@ function createIssue() {
     headers: {
     Authorization: `token ${token}`
     },
-    title: JSON.stringify(title),
-    body: JSON.stringify(body)     
+    body: JSON.stringify({
+      title: title,
+      body: body,
+    })     
   }).catch((error) => {
       console.log(error)
     })
@@ -60,5 +60,5 @@ function forkRepo() {
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
-  return '9f5cf4b7dca4219443ec3b662beedce27f75f6c8'
+  return 'e68b8be7cce45f1d907f610304afe6b648512064'
 }
