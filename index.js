@@ -8,15 +8,29 @@ function showIssues(json) {
 
 function createIssue() {
   console.log("*** createIssue")
+  const token = getToken()  
   const title = document.getElementById("title").value
   const body = document.getElementById("body").value
-  const ownerRepo = document.getElementById('ownerRepo').value
-  console.log("*** createIssue ownerRepo:", ownerRepo)
+  console.log("*** createIssue title: ", title)
+  console.log("*** createIssue body: ", body)
+  const owner = document.getElementById('owner').value
+  const repo = document.getElementById('repo').value
+  fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
+    method: 'POST',
+    headers: {
+    Authorization: `token ${token}`
+    },
+    title: JSON.stringify(title),
+    body: JSON.stringify(body)     
+  }).catch((error) => {
+      console.log(error)
+    })
 }
 
 function showForkedRepo(json) {
   console.log("*** json: ", json)
-  document.getElementById('ownerRepo').value = json.full_name
+  document.getElementById('owner').value = json.owner.login
+  document.getElementById('repo').value = json.name
   const repo = `<p><a href="https://github.com/${json.full_name}" target="_blank">Get Repo</a></p>`
   document.getElementById("results").innerHTML = repo
 }
@@ -38,14 +52,13 @@ function forkRepo() {
     .then(function(result) {
       showForkedRepo(result)
     }) 
-    .catch(function(error) {
-        console.log(error)
+    .catch((error) => {
+      console.log(error)
     })
-
 }
 
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
-  return '8b4992e8e35f498ec259b292f381c6ce5fbd1b43'
+  return '9f5cf4b7dca4219443ec3b662beedce27f75f6c8'
 }
