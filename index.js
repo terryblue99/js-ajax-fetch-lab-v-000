@@ -14,13 +14,13 @@ function createIssue() {
   const owner = document.getElementById('owner').value
   const repo = document.getElementById('repo').value
   fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
-    method: 'POST',
+    method: 'post',
     headers: {
     Authorization: `token ${token}`
     },
     body: JSON.stringify({
       title: title,
-      body: body,
+      body: body
     })     
   }).catch((error) => {
       console.log(error)
@@ -40,7 +40,7 @@ function forkRepo() {
   const repo = 'learn-co-curriculum/javascript-fetch-lab'
   //use fetch to fork the repository
   fetch(`https://api.github.com/repos/${repo}/forks`, {
-    method: 'POST',
+    method: 'post',
     headers: {
     Authorization: `token ${token}`
     }
@@ -60,5 +60,5 @@ function forkRepo() {
 function getToken() {
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
-  return 'e68b8be7cce45f1d907f610304afe6b648512064'
+  return ''
 }
