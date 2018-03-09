@@ -7,9 +7,9 @@ function getIssues() {
     headers: {
     Authorization: `token ${token}`
     }
-
-  }).then(function() {
-      showIssues(result)
+  }).then(result => result.json()).then(json => console.log("*** issues json: ", json))
+    .then(function() {
+      showIssues()
     })
     .catch((error) => {
       console.log(error)
@@ -37,7 +37,7 @@ function createIssue() {
       body: body
     })     
   }).then(function() {
-      getIssues(result)
+      getIssues()
     })
     .catch((error) => {
       console.log(error)
@@ -45,7 +45,8 @@ function createIssue() {
 }
 
 function showForkedRepo(json) {
-  console.log("*** json: ", json)
+  console.log("*** showForkedRepo")
+  console.log("*** repo json: ", json)
   document.getElementById('owner').value = json.owner.login
   document.getElementById('repo').value = json.name
   const repo = `<p><a href="https://github.com/${json.full_name}" target="_blank">Get Repo</a></p>`
@@ -53,6 +54,7 @@ function showForkedRepo(json) {
 }
 
 function forkRepo() {
+  console.log("*** forkRepo")
   const token = getToken()
   const repo = 'learn-co-curriculum/javascript-fetch-lab'
   //use fetch to fork the repository
