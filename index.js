@@ -1,12 +1,10 @@
+const githubApi = 'https://api.github.com'
+
 function getIssues() {
-  const token = getToken()
+  console.log("*** getIssue")
   const owner = document.getElementById('owner').value
-  const repo = document.getElementById('repo').value
-  fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
-    headers: {
-    Authorization: `token ${token}`
-    }
-  }).then(function(result) {
+  fetch(`${githubApi}/repos/${owner}/javascript-fetch-lab/issues`)
+    .then(function(result) {
       // return the issues
       return result.json()
     })
@@ -19,20 +17,20 @@ function getIssues() {
 }
 
 function showIssues(json) {
+  console.log("*** showIssues")
   const issueList = `<ul>${json.map(i => '<li>' + i.title).join('')}</ul>`
   document.getElementById("issues").innerHTML = issueList
 }
 
 function createIssue() {
-  const token = getToken()
+  console.log("*** createIssue")
   const title = document.getElementById("title").value
   const body = document.getElementById("body").value
   const owner = document.getElementById('owner').value
-  const repo = document.getElementById('repo').value
-  fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
+  fetch(`${githubApi}/repos/${owner}/javascript-fetch-lab/issues`, {
     method: 'post',
     headers: {
-    Authorization: `token ${token}`
+    Authorization: `token ${getToken()}`
     },
     body: JSON.stringify({
       title: title,
@@ -47,22 +45,24 @@ function createIssue() {
 }
 
 function showForkedRepo(json) {
-  // set the owner login and repo name in HTML hidden fields for use in
+  console.log("*** showForkedRepo")
+  console.log("*** showForkedRepo json", json)
+  // set the owner login in HTML hidden fields for use in
   // the createIssue and getIssues functions
   document.getElementById('owner').value = json.owner.login
-  document.getElementById('repo').value = json.name
   const repo = `<p><a href="https://github.com/${json.full_name}" target="_blank">Get Repo</a></p>`
+  console.log("*** showForkedRepo repo", repo)
   document.getElementById("results").innerHTML = repo
 }
 
 function forkRepo() {
-  const token = getToken()
+  console.log("*** ForkRepo")
   const repo = 'learn-co-curriculum/javascript-fetch-lab'
   //use fetch to fork the repository
-  fetch(`https://api.github.com/repos/${repo}/forks`, {
+  fetch(`${githubApi}/repos/${repo}/forks`, {
     method: 'post',
     headers: {
-    Authorization: `token ${token}`
+    Authorization: `token ${getToken()}`
     }
 
   }).then(function(result) {
@@ -78,6 +78,7 @@ function forkRepo() {
 }
 
 function getToken() {
+  console.log("*** getToken")
   //change to your token to run in browser, but set
   //back to '' before committing so all tests pass
   return ''
