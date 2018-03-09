@@ -47,7 +47,7 @@ function createIssue() {
 function showForkedRepo(json) {
   console.log("*** showForkedRepo")
   console.log("*** showForkedRepo json", json)
-  // set the owner login in HTML hidden fields for use in
+  // set the owner login in HTML hidden field for use in
   // the createIssue and getIssues functions
   document.getElementById('owner').value = json.owner.login
   const repo = `<p><a href="https://github.com/${json.full_name}" target="_blank">Get Repo</a></p>`
