@@ -1,5 +1,4 @@
 function getIssues() {
-  console.log("*** getIssues")
   const token = getToken()
   const owner = document.getElementById('owner').value
   const repo = document.getElementById('repo').value
@@ -7,9 +6,12 @@ function getIssues() {
     headers: {
     Authorization: `token ${token}`
     }
-  }).then(result => result.json()).then(json => console.log("*** issues json: ", json))
-    .then(function() {
-      showIssues()
+  }).then(function(result) {
+      // return the issues
+      return result.json()
+    })
+    .then(function(result) {
+      showIssues(result)
     })
     .catch((error) => {
       console.log(error)
@@ -17,11 +19,11 @@ function getIssues() {
 }
 
 function showIssues(json) {
-  console.log("*** showIssues")
+  const issueList = `<ul>${json.map(i => '<li>' + i.title).join('')}</ul>`
+  document.getElementById("issues").innerHTML = issueList
 }
 
 function createIssue() {
-  console.log("*** createIssue")
   const token = getToken()  
   const title = document.getElementById("title").value
   const body = document.getElementById("body").value
@@ -45,8 +47,8 @@ function createIssue() {
 }
 
 function showForkedRepo(json) {
-  console.log("*** showForkedRepo")
-  console.log("*** repo json: ", json)
+  // set the owner login and repo name in HTML hidden fields for use in 
+  // the createIssue and getIssues functions
   document.getElementById('owner').value = json.owner.login
   document.getElementById('repo').value = json.name
   const repo = `<p><a href="https://github.com/${json.full_name}" target="_blank">Get Repo</a></p>`
@@ -54,7 +56,6 @@ function showForkedRepo(json) {
 }
 
 function forkRepo() {
-  console.log("*** forkRepo")
   const token = getToken()
   const repo = 'learn-co-curriculum/javascript-fetch-lab'
   //use fetch to fork the repository
@@ -64,8 +65,8 @@ function forkRepo() {
     Authorization: `token ${token}`
     }
     
-  })// return the forked repository
-    .then(function(result) {
+  }).then(function(result) {
+      // return the forked repository
       return result.json()
     })
     .then(function(result) {
