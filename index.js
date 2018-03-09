@@ -24,7 +24,7 @@ function showIssues(json) {
 }
 
 function createIssue() {
-  const token = getToken()  
+  const token = getToken()
   const title = document.getElementById("title").value
   const body = document.getElementById("body").value
   const owner = document.getElementById('owner').value
@@ -37,7 +37,7 @@ function createIssue() {
     body: JSON.stringify({
       title: title,
       body: body
-    })     
+    })
   }).then(function() {
       getIssues()
     })
@@ -47,7 +47,7 @@ function createIssue() {
 }
 
 function showForkedRepo(json) {
-  // set the owner login and repo name in HTML hidden fields for use in 
+  // set the owner login and repo name in HTML hidden fields for use in
   // the createIssue and getIssues functions
   document.getElementById('owner').value = json.owner.login
   document.getElementById('repo').value = json.name
@@ -64,14 +64,14 @@ function forkRepo() {
     headers: {
     Authorization: `token ${token}`
     }
-    
+
   }).then(function(result) {
       // return the forked repository
       return result.json()
     })
     .then(function(result) {
       showForkedRepo(result)
-    }) 
+    })
     .catch((error) => {
       console.log(error)
     })
