@@ -1,3 +1,8 @@
+'use strict'
+// It catches some common coding bloopers, throwing exceptions.
+// It prevents, or throws errors, when relatively “unsafe” actions are taken (such as gaining access to the global object).
+// It disables features that are confusing or poorly thought out.
+
 const githubApi = 'https://api.github.com'
 
 function getIssues() {
